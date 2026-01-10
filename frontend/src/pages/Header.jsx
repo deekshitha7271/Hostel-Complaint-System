@@ -1,6 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "@/context/AuthContext";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar"
+
 export default function Header(){
     const { logout,name,role } = useContext(AuthContext);
     const navigate=useNavigate();
@@ -9,7 +15,7 @@ export default function Header(){
     navigate("/login");
   }
     return(
-        <header className="shadow-sm border  bg-white/80 backdrop-blur border-b border-slate-200 sticky top-0 z-50">
+        <header className="shadow-sm border  bg-[#2c3e50] backdrop-blur border-b border-slate-200 sticky top-0 z-50">
   <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
 
     <div className="flex items-center gap-4">
@@ -23,27 +29,40 @@ export default function Header(){
             </svg>
 
       <div>
-        <h1 className="text-base font-bold leading-tight">
+        <h1 className="text-[#FFFFFF] font-bold leading-tight text-2xl">
           Hostel Complaints
         </h1>
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-[#FFFFFF]">
           Management System
         </p>
       </div>
     </div>
 
     <div className="flex items-center gap-4">
-      <span className="text-sm font-medium text-slate-800">
+      <div className="flex flex-row flex-wrap items-center gap-12">
+      <Avatar>
+      <AvatarImage
+        src={`https://api.dicebear.com/7.x/initials/svg?seed=${name}`}
+        alt={name} 
+      />
+      <AvatarFallback>{name}</AvatarFallback>
+    </Avatar>
+
+     
+      
+    </div>
+      <span className="text-sm font-medium text-white">
         {name}
       </span>
-
+      
       <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-600">
         {role}
       </span>
+          
 
       <button
         onClick={handleLogout}
-        className="text-sm text-slate-500 hover:text-slate-900 transition"
+        className="text-sm text-slate-500 hover:text-slate-900 transition bg-transparent  bg-slate-300 hover:bg-slate-400 px-4 py-2 rounded-lg"
       >
         Sign Out
       </button>

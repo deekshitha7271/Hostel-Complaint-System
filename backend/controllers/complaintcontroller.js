@@ -40,7 +40,7 @@ export const createComplaint = async (req, res) => {
 export const getComplaints = async (req, res) => {
   try {
 
-    const {search, status, category}=req.query;
+    const {search, status, category, page = 1,limit = 5,}=req.query;
     let filter = {};
 
     if (req.user.role === "student") {
@@ -62,11 +62,17 @@ export const getComplaints = async (req, res) => {
       filter.category = category;
     }
 
-    const complaints = await ComplaintModel.find(filter)
-      .populate("studentId", "name email")
-      .sort({ createdAt: -1 });
+    const skip = (page - 1) * limit;
 
-    res.status(200).json(complaints);
+    const [complaints,total] = await Promise.all([ComplaintModel.find(filter).populate("studentId", "name email").sort({ createdAt: -1 }).skip(skip).limit(Number(limit)), ComplaintModel.countDocuments(filter)]);
+
+    res.status(200).json({ complaints,
+      pagination: {
+        page: Number(page),
+        limit: Number(limit),
+        totalPages: Math.ceil(total / limit),
+        totalItems: total
+      } });
 
   } catch (error) {
     res.status(500).json({ error: error.message });
