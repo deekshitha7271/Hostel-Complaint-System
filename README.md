@@ -25,7 +25,7 @@ A full-stack web application designed to streamline complaint management in host
 
 ---
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 ### Frontend
 - React
@@ -44,7 +44,7 @@ A full-stack web application designed to streamline complaint management in host
 
 ## Setup Instructions
 
-### lone the Repository
+### clone the Repository
 ```bash
 git clone https://github.com/<your-username>/Hostel-Complaint-System.git
 cd Hostel-Complaint-System
