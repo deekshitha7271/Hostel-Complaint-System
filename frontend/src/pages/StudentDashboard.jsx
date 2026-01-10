@@ -6,7 +6,7 @@ import StatusBadge from "./StatusBadge";
 import Header from "./Header";
 import NewComplaintDialog from "./NewComplaintDialog";
 import { useDebounce } from "../hooks/useDebounce";
-import { Search} from "lucide-react";
+import { Search } from "lucide-react";
 
 import {
   Table,
@@ -16,7 +16,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
 
 function TableShimmer() {
   return (
@@ -48,8 +47,6 @@ function StatCardSkeleton() {
   );
 }
 
-
-
 export default function StudentDashboard() {
   const { token } = useContext(AuthContext);
 
@@ -62,33 +59,30 @@ export default function StudentDashboard() {
   const [category, setCategory] = useState("");
   const [opened, setOpened] = useState(false);
   const [page, setPage] = useState(1);
-  const [limit]=useState(2);
+  const [limit] = useState(2);
   const [totalPages, setTotalPages] = useState(1);
   const [isSearching, setIsSearching] = useState(false);
-  
 
   useEffect(() => {
-  if (searchInput !== debouncedSearch) {
-    setIsSearching(true);
-  }
-}, [searchInput, debouncedSearch]);
+    if (searchInput !== debouncedSearch) {
+      setIsSearching(true);
+    }
+  }, [searchInput, debouncedSearch]);
 
-
-  // Fetch complaints
   const loadComplaints = async () => {
-  try {
-    const data = await fetchComplaints(token, {
-      search: debouncedSearch,
-      status,
-      category,
-      limit,
-      page,
-    });
+    try {
+      const data = await fetchComplaints(token, {
+        search: debouncedSearch,
+        status,
+        category,
+        limit,
+        page,
+      });
 
-    setComplaints(data.complaints);
-    setTotalPages(data.pagination.totalPages);
-  } finally {
-    setIsSearching(false);
+      setComplaints(data.complaints);
+      setTotalPages(data.pagination.totalPages);
+    } finally {
+      setIsSearching(false);
     }
   };
 
@@ -96,12 +90,10 @@ export default function StudentDashboard() {
     loadComplaints();
   }, [debouncedSearch, status, category, page]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setPage(1);
+  }, [debouncedSearch, status, category]);
 
-  },[debouncedSearch,status,category]);
-
-  //Stats
   const total = complaints.length;
   const open = complaints.filter((c) => c.status === "open").length;
   const inProgress = complaints.filter(
@@ -113,10 +105,8 @@ export default function StudentDashboard() {
     <div className="min-h-screen  bg-gray-100">
       <Header />
 
-     
       <main className="px-6 py-8">
         <div className="space-y-6">
-          
           <div className="flex justify-between items-center">
             <div>
               <h2 className="text-2xl font-bold">My Complaints</h2>
@@ -126,19 +116,17 @@ export default function StudentDashboard() {
             </div>
 
             <div className="flex gap-3">
-              
-                <button
-                  onClick={() => {
-                    setSearchInput("");
-                    setStatus("");
-                    setCategory("");
-                    setPage(1);
-                  }}
-                  className="border px-4 py-2 rounded-md text-sm"
-                >
-                  Refresh
-                </button>
-
+              <button
+                onClick={() => {
+                  setSearchInput("");
+                  setStatus("");
+                  setCategory("");
+                  setPage(1);
+                }}
+                className="border px-4 py-2 rounded-md text-sm"
+              >
+                Refresh
+              </button>
 
               <button
                 className="bg-slate-900 text-white px-4 py-2 rounded-md text-sm"
@@ -149,7 +137,6 @@ export default function StudentDashboard() {
             </div>
           </div>
 
-         
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
             {isSearching ? (
               <>
@@ -162,28 +149,30 @@ export default function StudentDashboard() {
               <>
                 <StatCard title="Total" value={total} variant="total" />
                 <StatCard title="Open" value={open} variant="open" />
-                <StatCard title="In Progress" value={inProgress} variant="progress" />
-                <StatCard title="Resolved" value={resolved} variant="resolved" />
+                <StatCard
+                  title="In Progress"
+                  value={inProgress}
+                  variant="progress"
+                />
+                <StatCard
+                  title="Resolved"
+                  value={resolved}
+                  variant="resolved"
+                />
               </>
             )}
           </div>
 
-
-          
           <div className="flex flex-wrap gap-4">
-            
-
             <div className="relative w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-            <input
-              placeholder="Search by room number..."
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-              className="pl-10 pr-3 py-2 w-full border rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-slate-400"
-            />
-          </div>
-
-
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+              <input
+                placeholder="Search by room number..."
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                className="pl-10 pr-3 py-2 w-full border rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-slate-400"
+              />
+            </div>
 
             <select
               className="border bg-[#FFFFFF] px-4 py-2 rounded-md"
@@ -209,7 +198,6 @@ export default function StudentDashboard() {
             </select>
           </div>
 
-          
           <Table className="bg-white rounded-lg border-amber-50 overflow-hidden shadow-sm">
             <TableHeader className="bg-slate-100">
               <TableRow className="text-sm text-slate-600">
@@ -221,8 +209,10 @@ export default function StudentDashboard() {
               </TableRow>
             </TableHeader>
 
-            {/* <TableBody>
-              {complaints.length === 0 ? (
+            <TableBody>
+              {isSearching ? (
+                <TableShimmer />
+              ) : complaints.length === 0 ? (
                 <TableRow>
                   <TableCell
                     colSpan={5}
@@ -246,58 +236,39 @@ export default function StudentDashboard() {
                   </TableRow>
                 ))
               )}
-            </TableBody> */}
-            <TableBody>
-  {isSearching ? (
-    <TableShimmer />
-  ) : complaints.length === 0 ? (
-    <TableRow>
-      <TableCell
-        colSpan={5}
-        className="py-8 text-center text-slate-500"
-      >
-        No complaints found
-      </TableCell>
-    </TableRow>
-  ) : (
-    complaints.map((c) => (
-      <TableRow key={c._id}>
-        <TableCell>{c.roomNumber}</TableCell>
-        <TableCell>{c.category}</TableCell>
-        <TableCell>{c.description}</TableCell>
-        <TableCell>
-          <StatusBadge status={c.status} />
-        </TableCell>
-        <TableCell>
-          {new Date(c.createdAt).toLocaleDateString()}
-        </TableCell>
-      </TableRow>
-    ))
-  )}
-</TableBody>
-
+            </TableBody>
           </Table>
 
           <div className="flex justify-center gap-3">
-            <button disabled={page===1} onClick={()=>setPage((p)=>p-1)} className="px-3 py-1 border rounded bg-white disabled:opacity-50">prev</button>
-            <span className="px-3 py-1 border rounded bg-white">Page {page} of {totalPages}</span>
-            <button disabled={page===totalPages} onClick={()=>setPage((p)=>p+1)} className="px-3 py-1 border rounded bg-white disabled:opacity-50">next</button>
+            <button
+              disabled={page === 1}
+              onClick={() => setPage((p) => p - 1)}
+              className="px-3 py-1 border rounded bg-white disabled:opacity-50"
+            >
+              prev
+            </button>
+            <span className="px-3 py-1 border rounded bg-white">
+              Page {page} of {totalPages}
+            </span>
+            <button
+              disabled={page === totalPages}
+              onClick={() => setPage((p) => p + 1)}
+              className="px-3 py-1 border rounded bg-white disabled:opacity-50"
+            >
+              next
+            </button>
           </div>
         </div>
       </main>
 
-     
       <NewComplaintDialog
         open={opened}
         onClose={() => setOpened(false)}
         onSubmit={async (data) => {
-          await createComplaint(token, data); 
-          await loadComplaints();             
+          await createComplaint(token, data);
+          await loadComplaints();
         }}
       />
     </div>
   );
 }
-
-
-//bg-gradient-to-br from-[#F8FAFC] via-[#EFF6FF] to-[#E0F2FE]

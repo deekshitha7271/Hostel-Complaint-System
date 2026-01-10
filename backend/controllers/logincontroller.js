@@ -5,7 +5,7 @@ import { loginSchema } from "../validations/auth.validation.js";
 export const loginUser = async (req, res) => {
   try {
     const validatedData = loginSchema.parse(req.body);
-    const {email,password}=validatedData;
+    const { email, password } = validatedData;
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -20,7 +20,7 @@ export const loginUser = async (req, res) => {
       {
         id: user._id,
         role: user.role,
-        name: user.name
+        name: user.name,
       },
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
@@ -28,17 +28,15 @@ export const loginUser = async (req, res) => {
 
     res.status(200).json({
       message: "Login successful",
-      token
+      token,
     });
-
   } catch (error) {
-    if(error.name==='ZodError'){
-        return res.status(400).json({
-            message:"Validation failed",
-            errors:error.errors
-        });
-        
+    if (error.name === "ZodError") {
+      return res.status(400).json({
+        message: "Validation failed",
+        errors: error.errors,
+      });
     }
-    res.status(500).json({error:error.message});
+    res.status(500).json({ error: error.message });
   }
 };

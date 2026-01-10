@@ -5,36 +5,36 @@ const complaintSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "usercollection",
-      required: true
-    }
+      required: true,
+    },
   ],
 
   roomNumber: {
     type: String,
-    required: true
+    required: true,
   },
 
   category: {
     type: String,
     enum: ["water", "electricity", "internet", "cleaning"],
-    required: true
+    required: true,
   },
 
   description: {
     type: String,
-    required: true
+    required: true,
   },
 
   status: {
     type: String,
     enum: ["open", "in-progress", "resolved"],
-    default: "open"
+    default: "open",
   },
 
   createdAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 export const ComplaintModel = new mongoose.model(

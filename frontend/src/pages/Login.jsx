@@ -31,7 +31,7 @@ export default function Login() {
 
     if (!result.success) {
       setFormErrors(result.error.flatten().fieldErrors);
-      return; // STOP submission
+      return;
     }
 
     try {
@@ -60,7 +60,7 @@ export default function Login() {
 
     if (!result.success) {
       setFormErrors(result.error.flatten().fieldErrors);
-      return; //  STOP submission
+      return;
     }
 
     try {
@@ -100,6 +100,12 @@ export default function Login() {
         </CardHeader>
 
         <CardContent>
+          {error && (
+            <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-md p-2 mb-4">
+              {error}
+            </p>
+          )}
+
           <Tabs
             defaultValue="login"
             className="w-full"

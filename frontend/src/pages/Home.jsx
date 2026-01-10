@@ -24,8 +24,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-slate-50">
-      
-      {/* HERO */}
       <section className="max-w-7xl mx-auto px-6 pt-28 text-center">
         <div className="inline-flex items-center gap-2 bg-slate-100 px-4 py-2 rounded-full text-sm text-slate-600 mb-6">
           <MessageSquare size={16} />
@@ -42,8 +40,11 @@ export default function Home() {
         </p>
 
         <div className="mt-8 flex justify-center gap-4">
-          {/* PRIMARY CTA */}
-          <Button size="lg" className="bg-[#2c3e50] hover:bg-[#1a2b3c] text-white px-8" onClick={handlePrimaryAction}>
+          <Button
+            size="lg"
+            className="bg-[#2c3e50] hover:bg-[#1a2b3c] text-white px-8"
+            onClick={handlePrimaryAction}
+          >
             {!isLoggedIn
               ? "Get Started"
               : role === "student"
@@ -51,12 +52,12 @@ export default function Home() {
               : "Go to Caretaker Panel"}
           </Button>
 
-          {/* SECONDARY CTA */}
           {!isLoggedIn && (
             <Button
               size="lg"
               variant="outline"
-              onClick={() => navigate("/login")} className="px-8 border-slate-300 text-slate-700 hover:bg-slate-100"
+              onClick={() => navigate("/login")}
+              className="px-8 border-slate-300 text-slate-700 hover:bg-slate-100"
             >
               Sign In
             </Button>
@@ -64,7 +65,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FEATURES */}
       <section className="max-w-7xl mx-auto px-6 py-28">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <Card className="rounded-2xl shadow-sm">
@@ -105,7 +105,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FOOTER */}
       <footer className="border-t bg-white py-8">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-slate-500">

@@ -4,7 +4,7 @@ import {
   getComplaints,
   updateComplaintStatus
 } from "../controllers/complaintcontroller.js";
-import { authMiddleware } from "../middleware/authMiddleware.js";
+import { authMiddleware } from "../middleware/authmiddleware.js";
 
 const router = Router();
 

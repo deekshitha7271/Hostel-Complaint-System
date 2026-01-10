@@ -20,7 +20,6 @@ import {
 import { Label } from "@/components/ui/label";
 
 export default function NewComplaintDialog({ open, onClose, onSubmit }) {
-
   const [form, setForm] = useState({
     roomNumber: "",
     category: "",
@@ -39,8 +38,7 @@ export default function NewComplaintDialog({ open, onClose, onSubmit }) {
 
     setErrors({});
 
-    await onSubmit(result.data); 
-
+    await onSubmit(result.data);
 
     setForm({ roomNumber: "", category: "", description: "" });
     onClose();
@@ -58,9 +56,7 @@ export default function NewComplaintDialog({ open, onClose, onSubmit }) {
             <Label>Room Number</Label>
             <Input
               value={form.roomNumber}
-              onChange={(e) =>
-                setForm({ ...form, roomNumber: e.target.value })
-              }
+              onChange={(e) => setForm({ ...form, roomNumber: e.target.value })}
             />
             {errors.roomNumber && (
               <p className="text-xs text-red-500">{errors.roomNumber[0]}</p>
@@ -70,9 +66,7 @@ export default function NewComplaintDialog({ open, onClose, onSubmit }) {
           <div>
             <Label>Category</Label>
             <Select
-              onValueChange={(value) =>
-                setForm({ ...form, category: value })
-              }
+              onValueChange={(value) => setForm({ ...form, category: value })}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select category" />
@@ -98,9 +92,7 @@ export default function NewComplaintDialog({ open, onClose, onSubmit }) {
               }
             />
             {errors.description && (
-              <p className="text-xs text-red-500">
-                {errors.description[0]}
-              </p>
+              <p className="text-xs text-red-500">{errors.description[0]}</p>
             )}
           </div>
         </div>
@@ -109,12 +101,9 @@ export default function NewComplaintDialog({ open, onClose, onSubmit }) {
           <Button variant="outline" onClick={onClose}>
             Cancel
           </Button>
-          <Button onClick={handleSubmit}>
-            Submit
-          </Button>
+          <Button onClick={handleSubmit}>Submit</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
   );
 }
-

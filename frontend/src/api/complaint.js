@@ -1,6 +1,5 @@
 const BASE_URL = "http://localhost:5000/api";
 
-//  FETCH complaints
 export const fetchComplaints = async (token, query = {}) => {
   const params = new URLSearchParams(query).toString();
 
@@ -19,7 +18,6 @@ export const fetchComplaints = async (token, query = {}) => {
   return data;
 };
 
-// CREATE complaint
 export const createComplaint = async (token, data) => {
   const res = await fetch(`${BASE_URL}/complaints`, {
     method: "POST",
@@ -39,19 +37,15 @@ export const createComplaint = async (token, data) => {
   return result;
 };
 
-
 export const updateComplaintStatus = async (token, id, status) => {
-  const res = await fetch(
-    `${BASE_URL}/complaints/${id}/status`,
-    {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ status }),
-    }
-  );
+  const res = await fetch(`${BASE_URL}/complaints/${id}/status`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ status }),
+  });
 
   const data = await res.json();
 

@@ -1,7 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-export async function connectdb(URI){
-    await mongoose.connect(URI);
-    console.log("Database connected successfully");
+export async function connectdb(URI) {
+  await mongoose.connect(URI);
+  console.log("Database connected successfully");
 }
-
